@@ -1,65 +1,107 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import React from 'react';
+// dependies Import ==>
+import React, {useState} from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-} from 'react-native';
-import {
-  Colors,
-} from 'react-native/Libraries/NewAppScreen';
+  NavigationContainer,
+  DefaultTheme,
+  DarkTheme,
+} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+//project file import ==>
+import HomeScreen from './src/Screens/HomeScreen.js';
+import CountryDetailScreen from './src/Screens/CountryDetailScreen.js';
+import {Image, StyleSheet, Text, View, useColorScheme} from 'react-native';
 
+const App = () => {
+  //const ==>
+  const deviceColorScheme = useColorScheme();
+  const [appTheme, setAppTheme] = useState(deviceColorScheme || 'light');
+  const Stack = createNativeStackNavigator();
+  const theme = appTheme === 'dark' ? DarkTheme : DefaultTheme;
 
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+  //<==
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  //Methods ==>
+  const toggleTheme = () => {
+    const newTheme = appTheme === 'light' ? 'dark' : 'light';
+    setAppTheme(newTheme);
   };
 
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-      <Text>
-        Welcome To ReactNativeContryCode
-      </Text>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
+  const getButtonStyle = () => {
+    return {
+      backgroundColor: appTheme === 'dark' ? 'black' : 'white',
+      color: appTheme === 'dark' ? 'white' : 'black',
+    };
+  };
+  //<==
 
+  return (
+    <NavigationContainer theme={theme}>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen
+          name="Home"
+          options={{
+            header: () => (
+              <View
+                style={[
+                  styles.homeStackContainer,
+                  {backgroundColor: appTheme === 'dark' ? 'black' : 'white'},
+                ]}>
+                <Text
+                  style={[
+                    styles.topHeaderView,
+                    {color: appTheme === 'dark' ? 'white' : 'black'},
+                  ]}>
+                  Where is the World?
+                </Text>
+                <Image
+                  source={require('./src/Assests/editIcon.png')}
+                  style={styles.imageStyles}
+                  onPress={toggleTheme}
+                />
+                <Text onPress={toggleTheme} style={getButtonStyle()}>
+                  Dark Mode{' '}
+                </Text>
+              </View>
+            ),
+          }}>
+          {({navigation}) => (
+            <HomeScreen
+              navigation={navigation}
+              appTheme={appTheme}
+              toggleTheme={toggleTheme}
+            />
+          )}
+        </Stack.Screen>
+        <Stack.Screen
+          name="CountryDetail"
+          component={CountryDetailScreen}
+          initialParams={{appTheme}}
+          options={{
+            headerShown: true,
+            headerTitle: 'Country Details',
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+
+//styles ==>
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  homeStackContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 10,
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  topHeaderView: {
+    fontWeight: 'bold',
+    fontSize: 14,
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
+  imageStyles: {
+    width: 20,
+    height: 20,
+    marginLeft: 150,
   },
 });
-
 export default App;
