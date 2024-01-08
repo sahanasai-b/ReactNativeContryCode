@@ -28,7 +28,7 @@ const App = () => {
 
   const getButtonStyle = () => {
     return {
-      backgroundColor: appTheme === 'dark' ? 'black' : 'white',
+      backgroundColor: appTheme === 'dark' ? '#333' : 'white',
       color: appTheme === 'dark' ? 'white' : 'black',
     };
   };
@@ -44,7 +44,7 @@ const App = () => {
               <View
                 style={[
                   styles.homeStackContainer,
-                  {backgroundColor: appTheme === 'dark' ? 'black' : 'white'},
+                  {backgroundColor: appTheme === 'dark' ? '#333' : 'white'},
                 ]}>
                 <Text
                   style={[
@@ -59,7 +59,7 @@ const App = () => {
                   onPress={toggleTheme}
                 />
                 <Text onPress={toggleTheme} style={getButtonStyle()}>
-                  Dark Mode{' '}
+                  {appTheme == "dark" ? "Light Mode " : 'Dark Mode'}
                 </Text>
               </View>
             ),

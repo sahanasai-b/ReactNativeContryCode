@@ -12,7 +12,7 @@ const CountryDetailScreen = ({route, navigation}) => {
     <View
       style={[
         styles.container,
-        {backgroundColor: appTheme === 'dark' ? '#333' : '#fff'},
+        {backgroundColor: appTheme === 'dark' ? 'black' : '#fff'},
       ]}>
       <Image source={{uri: country.flags.png}} style={styles.image} />
       <View

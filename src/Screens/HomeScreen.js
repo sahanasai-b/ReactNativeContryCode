@@ -52,7 +52,7 @@ const HomeScreen = ({navigation, appTheme}) => {
 
   const getAllCountries = async region => {
     try {
-      const res = await fetch(`${apiURL}/region/${region}`);
+      const res = await axios.get(`${apiURL}/region/${region}`);
       if (!res.ok) throw new Error('Something went wrong!');
       const data = await res.json();
       setSelectedRegion(data);
