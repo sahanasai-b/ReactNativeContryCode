@@ -2,11 +2,10 @@
 import React from 'react';
 import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
 
-const CountryDetailScreen = ({route, navigation}) => {
+const CountryDetailScreen = ({route}) => {
   //const ==>
   const {country, appTheme} = route.params;
   //<==
-
 
   return (
     <View
@@ -27,18 +26,76 @@ const CountryDetailScreen = ({route, navigation}) => {
           ]}>
           {country.name}
         </Text>
-        <Text style={{color: appTheme === 'dark' ? '#fff' : '#333'}}>
+        <Text
+          style={{
+            color: appTheme === 'dark' ? '#fff' : '#333',
+            marginBottom: 8,
+          }}>
           Region: {country.region}
         </Text>
-        <Text style={{color: appTheme === 'dark' ? '#fff' : '#333'}}>
+        <Text
+          style={{
+            color: appTheme === 'dark' ? '#fff' : '#333',
+            marginBottom: 8,
+          }}>
           Population: {country.population}
         </Text>
-        <Text style={{color: appTheme === 'dark' ? '#fff' : '#333'}}>
+        <Text
+          style={{
+            color: appTheme === 'dark' ? '#fff' : '#333',
+            marginBottom: 8,
+          }}>
           Capital: {country.capital}
         </Text>
-        <Text style={{color: appTheme === 'dark' ? '#fff' : '#333'}}>
+        <Text
+          style={{
+            color: appTheme === 'dark' ? '#fff' : '#333',
+            marginBottom: 8,
+          }}>
+          Native Name: {country.nativeName}
+        </Text>
+        <Text
+          style={{
+            color: appTheme === 'dark' ? '#fff' : '#333',
+            marginBottom: 8,
+          }}>
           Border Countries:
         </Text>
+        <View style={styles.bellowcontaint}>
+          <Text
+            style={{
+              color: appTheme === 'dark' ? '#fff' : '#333',
+              marginBottom: 8,
+            }}>
+            Top Level Domain : {country?.topLevelDomain}
+          </Text>
+          <Text
+            style={{
+              color: appTheme === 'dark' ? '#fff' : '#333',
+              marginBottom: 8,
+            }}>
+            Curriencies : {country?.currencies[0]?.code}
+          </Text>
+          <Text
+            style={{
+              color: appTheme === 'dark' ? '#fff' : '#333',
+              marginBottom: 8,
+            }}>
+            language : {country?.languages[0]?.name}
+          </Text>
+        </View>
+
+        {country?.borders && (
+          <Text
+            style={{
+              fontWeight: 'bold',
+              marginTop: 20,
+              color: appTheme === 'dark' ? '#fff' : '#333',
+            }}>
+            {' '}
+            Border Countries
+          </Text>
+        )}
         <View style={styles.buttonContainer}>
           {country?.borders?.map(borderCountry => (
             <TouchableOpacity
@@ -47,8 +104,7 @@ const CountryDetailScreen = ({route, navigation}) => {
                 styles.button,
                 {backgroundColor: appTheme === 'dark' ? '#555' : '#eee'},
               ]}
-              onPress={() => {}}
-            >
+              onPress={() => {}}>
               <Text style={styles.buttonText}>{borderCountry}</Text>
             </TouchableOpacity>
           ))}
@@ -93,6 +149,9 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#000',
+  },
+  bellowcontaint: {
+    marginTop: 20,
   },
 });
 //<==
